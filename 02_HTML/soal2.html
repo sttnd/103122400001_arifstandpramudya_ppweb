@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Pendaftaran Mahasiswa</title>
+</head>
+<body>
+    <h1>Form Pendaftaran Mahasiswa</h1>
+    <form>
+        <label for="nama">Nama:</label><br>
+        <input type="text" id="nama" name="nama" required>
+        <br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        <label>Jenis Kelamin:</label><br>
+
+        <input type="radio" id="laki" name="jenis_kelamin" value="Laki-laki">
+        <label for="laki">Laki-laki</label><br>
+
+        <input type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan">
+        <label for="perempuan">Perempuan</label>
+
+        <br><br>
+
+        <label>Hobi:</label><br>
+
+        <input type="checkbox" id="membaca" name="hobi" value="Membaca">
+        <label for="membaca">Membaca</label><br>
+
+        <input type="checkbox" id="olahraga" name="hobi" value="Olahraga">
+        <label for="olahraga">Olahraga</label><br>
+
+        <input type="checkbox" id="musik" name="hobi" value="Musik">
+        <label for="musik">Musik</label>
+
+        <br><br>
+
+        <label for="pendidikan">Pendidikan:</label><br>
+
+        <select id="pendidikan" name="pendidikan">
+            <option value="SMA">SMA</option>
+            <option value="D3">D3</option>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+        </select>
+
+        <br><br>
+
+        <label for="saran">Kritik dan Saran:</label><br>
+        <textarea id="saran" name="saran" rows="5" cols="40"></textarea>
+        
+        <br><br>
+
+        <input type="submit" value="Submit">
+
+    </form>
+</body>
+</html>
