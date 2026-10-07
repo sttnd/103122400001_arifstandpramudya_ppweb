@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Pendaftaran Praktikum Pemrograman Web</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center text-uppercase fw-bold mb-5">
+        Pendaftaran Praktikum Pemrograman Web
+      </h1>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <img
+            src="assets/kampus.png"
+            class="img-fluid rounded mb-3"
+            alt="Kegiatan Praktikum"
+          />
+
+          <h3 class="fw-bold">Informasi Praktikum</h3>
+
+          <p>
+            Praktikum Pemrograman Web merupakan kegiatan pembelajaran untuk
+            memahami pembuatan website menggunakan teknologi HTML, Bootstrap,
+            dan Tailwind CSS.
+          </p>
+
+          <p>
+            Mahasiswa akan mempelajari desain antarmuka, responsive web design,
+            serta penggunaan framework CSS.
+          </p>
+        </div>
+
+        <div class="col-md-6">
+          <h3 class="fw-bold mb-3">Form Pendaftaran</h3>
+
+          <form>
+            <div class="mb-3">
+              <label for="nama" class="form-label"> Nama Lengkap </label>
+
+              <input type="text" class="form-control" id="nama" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="nim" class="form-label"> NIM </label>
+
+              <input type="text" class="form-control" id="nim" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label"> Email </label>
+
+              <input type="email" class="form-control" id="email" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="kelas" class="form-label"> Kelas </label>
+
+              <input type="text" class="form-control" id="kelas" required />
+            </div>
+
+            <button type="submit" class="btn btn-success">Daftar</button>
+
+            <button type="reset" class="btn btn-secondary">Reset</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <h3 class="fw-bold">Data Peserta</h3>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>No</th>
+                <th>Nama Lengkap</th>
+                <th>NIM</th>
+                <th>Kelas</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Alya Putri</td>
+                <td>101142400101</td>
+                <td>IF-45-01</td>
+              </tr>
+
+              <tr>
+                <td>2</td>
+                <td>Bima Pratama</td>
+                <td>101142400102</td>
+                <td>IF-45-02</td>
+              </tr>
+
+              <tr>
+                <td>3</td>
+                <td>Nabila Zahra</td>
+                <td>101142400103</td>
+                <td>IF-45-01</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
