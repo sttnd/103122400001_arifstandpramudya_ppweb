@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soal 1 | Portal Informasi Praktikum</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../assets/style.css">
+  <style>
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 104px;
+      margin: 6px 0 16px;
+      padding: 10px 12px;
+      border: 1px solid var(--control);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      resize: vertical;
+    }
+    pre.result { min-height: 100px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .inline-stat { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 12px 0 18px; }
+    .inline-stat p { margin: 0; }
+    .subsection { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+    .field-note { color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#utama">Lewati navigasi</a>
+  <aside class="sidebar">
+    <a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">{ }</span> Praktikum AJAX</a>
+    <div class="scope">Modul 07 / Proyek praktikan</div>
+    <nav aria-label="Navigasi proyek">
+      <a href="../../index.html">Peta materi</a>
+      <a href="../soal-01/" aria-current="page">Soal 1 · Portal informasi</a>
+      <a href="../soal-02/">Soal 2 · Registrasi React</a>
+    </nav>
+    <p class="sidebar-footer">Latihan AJAX, Fetch API, XMLHttpRequest, dan konsumsi API.</p>
+  </aside>
+
+  <header class="topbar">
+    <span>Modul 07 <span class="context">/ Soal 1</span></span>
+    <a href="../../Modul_07_AJAX_Sederhana.pdf">Baca modul PDF</a>
+  </header>
+
+  <div class="mobile-nav">
+    <label class="skip" for="pindah-proyek">Pilih proyek</label>
+    <select id="pindah-proyek" aria-label="Pindah proyek" onchange="location.href=this.value">
+      <option value="../soal-01/" selected>Soal 1 · Portal informasi</option>
+      <option value="../soal-02/">Soal 2 · Registrasi React</option>
+    </select>
+  </div>
+
+  <main id="utama" class="sheet">
+    <div class="file-warning" data-file-warning hidden>
+      <strong>Jalankan server terlebih dahulu.</strong><br>
+      Ekstrak seluruh ZIP, jalankan <code>JALANKAN.bat</code>, lalu buka halaman melalui
+      <a href="http://127.0.0.1:3007">http://127.0.0.1:3007</a>. Jangan membuka file melalui <code>file://</code>.
+    </div>
+
+    <div class="page-meta">Proyek 1 / Bobot 50 poin</div>
+    <h1>Portal Informasi Praktikum</h1>
+    <p class="intro">Muat pengumuman menggunakan XMLHttpRequest dan ambil direktori peserta menggunakan Fetch API. Kedua proses berjalan tanpa memuat ulang halaman.</p>
+
+    <div class="workspace">
+      <section class="practice" aria-label="Pengumuman dan aktivitas praktikan">
+        <h2>Aktivitas praktikan</h2>
+        <label for="catatan">Catatan praktikan</label>
+        <textarea id="catatan" placeholder="Tulis catatan selama praktikum..."></textarea>
+        <div class="inline-stat">
+          <button type="button" id="tambah-hitungan">Tambah hitungan</button>
+          <p>Jumlah klik: <strong id="jumlah-hitungan" aria-live="polite">0</strong></p>
+        </div>
+        <p class="field-note" id="waktu-awal">Waktu halaman dibuka: sedang dicatat...</p>
+
+        <div class="subsection">
+          <h2>Pengumuman praktikum</h2>
+          <p class="field-note">Sumber data: file lokal <code>pengumuman.txt</code>, diminta menggunakan XMLHttpRequest asynchronous.</p>
+          <button type="button" id="muat-pengumuman">Muat pengumuman</button>
+          <p id="status-pengumuman" class="result" role="status" aria-live="polite">Klik tombol untuk mengambil pengumuman.</p>
+          <pre id="isi-pengumuman" class="result" aria-label="Isi pengumuman">Belum ada pengumuman yang dimuat.</pre>
+        </div>
+      </section>
+
+      <section class="practice" aria-label="Direktori peserta">
+        <h2>Direktori peserta</h2>
+        <label for="sumber-api">Pilih sumber data</label>
+        <select id="sumber-api">
+          <option value="mock">Mock lokal</option>
+          <option value="eksternal">JSONPlaceholder</option>
+        </select>
+        <p class="field-note">Mock lokal memakai jeda 1.500 ms. JSONPlaceholder memerlukan koneksi internet.</p>
+        <button type="button" id="ambil-peserta">Ambil peserta</button>
+        <p id="status-peserta" class="result" role="status" aria-live="polite">Pilih sumber, lalu ambil peserta.</p>
+        <p id="info-peserta" class="field-note">Sumber: belum dipilih · Data ditampilkan: 0</p>
+        <ul id="daftar-peserta" class="users" aria-label="Daftar peserta"></ul>
+      </section>
+    </div>
+
+    <section class="explanation" style="margin-top:24px">
+      <h2>Alur program</h2>
+      <ol>
+        <li>Event klik pada tombol Muat pengumuman menjalankan XMLHttpRequest secara asynchronous.</li>
+        <li>Program memeriksa <code>readyState</code> dan status HTTP. Jika status berhasil, isi <code>responseText</code> ditampilkan pada elemen <code>pre</code>.</li>
+        <li>Event klik pada tombol Ambil peserta menjalankan Fetch sesuai sumber yang dipilih.</li>
+        <li>Program memeriksa <code>response.ok</code>, membaca JSON, lalu menampilkan maksimal tiga nama dan email dari response.</li>
+        <li>Selama request berjalan, tombol request dinonaktifkan. Catatan dan tombol hitungan tetap dapat digunakan.</li>
+      </ol>
+      <p>Data direktori berasal dari response API. Nama peserta tidak ditulis secara manual pada kode tampilan.</p>
+    </section>
+
+    <div class="pager">
+      <a href="../../index.html">&larr; Peta materi</a>
+      <a href="../soal-02/">Lanjut ke Soal 2 &rarr;</a>
+    </div>
+  </main>
+  <script src="../../assets/ui.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

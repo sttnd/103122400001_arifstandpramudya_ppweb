@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soal 2 | Registrasi Peserta React</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../assets/style.css">
+  <style>
+    .form-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .response-data { margin: 12px 0 0; padding: 14px; border-radius: 6px; background: var(--raised); }
+    .response-data p { margin: 4px 0; overflow-wrap: anywhere; }
+    .response-data strong { display: inline-block; min-width: 112px; }
+    .field-help { color: var(--muted); font-size: 14px; margin-top: -10px; }
+    .section-divider { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#utama">Lewati navigasi</a>
+  <aside class="sidebar">
+    <a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">{ }</span> Praktikum AJAX</a>
+    <div class="scope">Modul 07 / Proyek praktikan</div>
+    <nav aria-label="Navigasi proyek">
+      <a href="../../index.html">Peta materi</a>
+      <a href="../soal-01/">Soal 1 · Portal informasi</a>
+      <a href="../soal-02/" aria-current="page">Soal 2 · Registrasi React</a>
+    </nav>
+    <p class="sidebar-footer">Latihan Axios GET/POST, state, effect, dan validasi formulir.</p>
+  </aside>
+
+  <header class="topbar">
+    <span>Modul 07 <span class="context">/ Soal 2</span></span>
+    <a href="../../Modul_07_AJAX_Sederhana.pdf">Baca modul PDF</a>
+  </header>
+
+  <div class="mobile-nav">
+    <label class="skip" for="pindah-proyek">Pilih proyek</label>
+    <select id="pindah-proyek" aria-label="Pindah proyek" onchange="location.href=this.value">
+      <option value="../soal-01/">Soal 1 · Portal informasi</option>
+      <option value="../soal-02/" selected>Soal 2 · Registrasi React</option>
+    </select>
+  </div>
+
+  <main id="utama" class="sheet">
+    <div class="file-warning" data-file-warning hidden>
+      <strong>Jalankan server terlebih dahulu.</strong><br>
+      Ekstrak seluruh ZIP, jalankan <code>JALANKAN.bat</code>, lalu buka halaman melalui
+      <a href="http://127.0.0.1:3007">http://127.0.0.1:3007</a>. Jangan membuka file melalui <code>file://</code>.
+    </div>
+    <div class="page-meta">Proyek 2 / Bobot 50 poin</div>
+    <h1>Aplikasi Registrasi Peserta React</h1>
+    <p class="intro">Daftar peserta dimuat otomatis menggunakan Axios GET. Formulir mengirim pendaftaran melalui Axios POST dan menampilkan response secara terpisah.</p>
+    <div id="root"></div>
+    <div class="pager">
+      <a href="../soal-01/">&larr; Kembali ke Soal 1</a>
+      <a href="../../index.html">Peta materi &rarr;</a>
+    </div>
+  </main>
+
+  <script src="../../assets/ui.js"></script>
+  <script src="../../vendor/axios.min.js"></script>
+  <script src="../../vendor/react.development.js"></script>
+  <script src="../../vendor/react-dom.development.js"></script>
+  <script src="../../vendor/babel.min.js"></script>
+  <script type="text/babel" data-presets="react" src="app.jsx"></script>
+</body>
+</html>
