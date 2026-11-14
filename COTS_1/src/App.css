@@ -1,0 +1,732 @@
+/* Design system adapted from AntiSlopUI (MIT) — brian (Ade Febrian) — https://github.com/Adefebrian/AntislopUI */
+/* Transit / Terminal layer: square corners, one signal color, rules carry the structure. */
+
+/* ==========================================================================
+   1. Buttons — fill-from-bottom via a solid background-image (no pseudo layer)
+   ========================================================================== */
+
+button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 1.25rem;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background-color: transparent;
+  background-image: linear-gradient(var(--ink), var(--ink));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 100% 0%;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-snap),
+    background-size var(--dur-fast) var(--ease-snap);
+}
+
+button:not(:disabled):hover,
+button:not(:disabled):focus-visible,
+.btn:not(:disabled):not([aria-disabled='true']):hover,
+.btn:not(:disabled):not([aria-disabled='true']):focus-visible {
+  background-size: 100% 100%;
+  color: var(--paper);
+}
+
+.btn--accent {
+  background-color: var(--accent);
+  background-image: linear-gradient(var(--ink), var(--ink));
+  color: var(--on-accent);
+}
+
+.btn--accent:not(:disabled):not([aria-disabled='true']):hover,
+.btn--accent:not(:disabled):not([aria-disabled='true']):focus-visible {
+  color: var(--paper);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  background-image: linear-gradient(var(--ink), var(--ink));
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+button:disabled,
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  background-color: var(--paper-2);
+  background-image: none;
+  border-color: var(--ink-soft);
+  border-style: dashed;
+  color: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   2. Shell + departure-board header
+   ========================================================================== */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background: var(--paper);
+}
+
+.app-header {
+  padding-block: clamp(44px, 8vw, 88px) clamp(32px, 5vw, 56px);
+  padding-inline: max(24px, calc((100% - 1120px) / 2));
+  background: var(--night);
+  color: var(--chalk);
+  border-bottom: 2px solid var(--accent);
+}
+
+/* Route motif: pure-CSS dashed transit line (decorative, no copy). */
+.app-header::after {
+  content: '';
+  display: block;
+  height: 2px;
+  margin-top: clamp(28px, 5vw, 48px);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--chalk-soft) 0 14px,
+    transparent 14px 24px
+  );
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65em;
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: '';
+  flex: none;
+  width: 0.5em;
+  height: 0.5em;
+  background: var(--accent);
+}
+
+.app-header .eyebrow {
+  color: var(--chalk-soft);
+}
+
+.hero-title {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.22em;
+  margin: clamp(14px, 2.2vw, 22px) 0 0;
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 7.5vw, 5.25rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+
+/* Mask-line reveal: outer clips, inner slides up. */
+.hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.hero-word__inner {
+  display: inline-block;
+}
+
+.js .hero-word__inner {
+  transform: translateY(110%);
+  animation: hero-rise var(--dur-slow) var(--ease-out-expo) both;
+  animation-delay: calc(120ms + var(--i, 0) * 90ms);
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.app-description {
+  max-width: 52ch;
+  margin: clamp(14px, 2vw, 20px) 0 0;
+  color: var(--chalk-soft);
+  font-size: clamp(1rem, 1.4vw, 1.0625rem);
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   3. Content column + sections + panels
+   ========================================================================== */
+
+.app-content {
+  flex: 1 0 auto;
+  width: min(1120px, 100% - 48px);
+  margin: 0 auto;
+  padding: 40px 0 72px;
+}
+
+.section-heading {
+  display: grid;
+  gap: 6px;
+}
+
+.section-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.section-heading h2::before {
+  content: '';
+  flex: none;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--accent);
+}
+
+.search-section,
+.panel {
+  --pad: 24px;
+  padding: var(--pad);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  box-shadow: none;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   4. Search filter
+   ========================================================================== */
+
+.search-filter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.field > span {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+input,
+select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 14px;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper-2);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+input::placeholder {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.result-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 16px;
+  border-left: 4px solid var(--accent);
+  background: var(--night);
+  color: var(--chalk);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   5. Workspace grid + catalog panel
+   ========================================================================== */
+
+.workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+  gap: 24px;
+  margin-top: 24px;
+  align-items: start;
+}
+
+.catalog-panel .empty-state,
+.catalog-panel .component-placeholder {
+  flex: 1 1 auto;
+}
+
+/* ==========================================================================
+   6. Reservation panel — ticket treatment
+   ========================================================================== */
+
+.reservation-panel {
+  background-color: var(--paper-2);
+  /* Punch-hole perforation down the left edge (radial-gradient dots). */
+  background-image: radial-gradient(circle, var(--ink-soft) 1.5px, transparent 1.6px);
+  background-size: 12px 12px;
+  background-repeat: repeat-y;
+  background-position: left 9px top 9px;
+  padding-left: calc(var(--pad, 24px) + 6px);
+}
+
+/* Shuttle List & Card Styles (Anggota 2) */
+.shuttle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shuttle-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.shuttle-card:hover {
+  border-color: #b9d5f3;
+  box-shadow: 0 6px 18px rgba(20, 33, 61, 0.06);
+}
+
+.shuttle-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.shuttle-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.shuttle-session-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: var(--soft);
+  color: var(--brand);
+}
+
+.shuttle-session-badge.session-pagi {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.shuttle-session-badge.session-siang {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.shuttle-session-badge.session-sore {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.shuttle-card-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--soft);
+  border-bottom: 1px solid var(--soft);
+}
+
+.shuttle-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shuttle-info-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.shuttle-info-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.shuttle-info-value.seats-available {
+  color: #059669;
+}
+
+.shuttle-info-value.seats-empty {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.shuttle-price-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+
+.shuttle-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.btn-tambah {
+  min-height: 40px;
+  padding: 0 20px;
+  border: 1px solid var(--brand);
+  border-radius: 10px;
+  background: var(--brand);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-tambah:hover:not(:disabled) {
+  background: var(--brand-dark);
+}
+
+.btn-tambah:disabled {
+  background: #94a3b8;
+  border-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.reservation-list {
+  display: grid;
+  gap: 14px;
+}
+
+.reservation-item {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--soft);
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.reservation-header h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.reservation-meta,
+.reservation-total {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.reservation-total {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.reservation-actions {
+  display: grid;
+  grid-template-columns: auto 72px;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.reservation-actions input {
+  min-height: 38px;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.remove-button {
+  min-height: 32px;
+  padding: 0 10px;
+  border-color: #fecaca;
+  background: #fff1f2;
+  color: #b42318;
+  font-size: 0.8rem;
+}
+
+.remove-button:hover {
+  background: #ffe4e6;
+}
+
+.validation-error {
+  grid-column: 1 / -1;
+  color: #b42318;
+  font-size: 0.75rem;
+}
+
+.error-state p {
+  margin-bottom: 16px;
+  color: #b42318;
+}
+
+.summary {
+  margin: 28px calc(-1 * var(--pad, 24px)) calc(-1 * var(--pad, 24px));
+  padding: 20px var(--pad, 24px) 0;
+  border-top: 2px dashed var(--ink-soft);
+}
+
+.summary-row,
+.summary-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.summary-row {
+  padding: 10px 0;
+}
+
+.summary-row + .summary-row {
+  border-top: 1px dashed var(--ink-soft);
+}
+
+.summary-row span,
+.summary-total span {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.summary-row strong,
+.summary-total strong {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-row strong {
+  font-size: 0.9375rem;
+}
+
+.summary-total {
+  margin: 18px calc(-1 * var(--pad, 24px)) 0;
+  padding: 14px var(--pad, 24px);
+  border-left: 4px solid var(--accent);
+  background: var(--night);
+  color: var(--chalk);
+}
+
+.summary-total span {
+  color: var(--chalk-soft);
+}
+
+.summary-total strong {
+  color: var(--chalk);
+  font-size: 1.5rem;
+}
+
+/* ==========================================================================
+   7. Empty states / component placeholders
+   ========================================================================== */
+
+.empty-state,
+.component-placeholder {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 40px 24px;
+  border: 2px dashed var(--ink-soft);
+  border-radius: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.empty-state > p,
+.component-placeholder > p,
+.empty-state__title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.empty-state > small,
+.component-placeholder > small,
+.empty-state__note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   8. Responsive
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .workspace-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding-inline: 16px;
+  }
+
+  .app-content {
+    width: min(1120px, 100% - 32px);
+    padding: 28px 0 56px;
+  }
+
+  .search-filter {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .search-section,
+  .panel {
+    --pad: 20px;
+  }
+
+  .result-count {
+    margin-top: 4px;
+  }
+
+  .shuttle-card-body {
+    grid-template-columns: 1fr;
+  }
+
+  .shuttle-card-footer {
+    justify-content: stretch;
+  }
+
+  .btn-tambah {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .app-header {
+    padding-inline: 12px;
+  }
+
+  .app-content {
+    width: calc(100% - 24px);
+    padding: 24px 0 48px;
+  }
+
+  .search-section,
+  .panel {
+    --pad: 16px;
+  }
+
+  .empty-state,
+  .component-placeholder {
+    padding: 28px 16px;
+  }
+}
+
+/* ==========================================================================
+   9. Reduced motion gates
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .btn {
+    transition: none;
+  }
+
+  .js .hero-word__inner {
+    transform: none;
+    animation: none;
+  }
+}
